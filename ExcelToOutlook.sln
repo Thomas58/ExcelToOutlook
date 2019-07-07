@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToOutlook", "ExcelToOutlook\ExcelToOutlook.csproj", "{52995C80-7086-4F2C-971F-7B2A72456B61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oauth", "Oauth\Oauth.csproj", "{AA447D2C-26CD-4068-8C28-42B1BB35A7FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excel", "Excel\Excel.csproj", "{DF1404AB-E050-4BEB-BADF-91A5B40B2D40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52995C80-7086-4F2C-971F-7B2A72456B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52995C80-7086-4F2C-971F-7B2A72456B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52995C80-7086-4F2C-971F-7B2A72456B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52995C80-7086-4F2C-971F-7B2A72456B61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA447D2C-26CD-4068-8C28-42B1BB35A7FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA447D2C-26CD-4068-8C28-42B1BB35A7FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA447D2C-26CD-4068-8C28-42B1BB35A7FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA447D2C-26CD-4068-8C28-42B1BB35A7FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF1404AB-E050-4BEB-BADF-91A5B40B2D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF1404AB-E050-4BEB-BADF-91A5B40B2D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF1404AB-E050-4BEB-BADF-91A5B40B2D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF1404AB-E050-4BEB-BADF-91A5B40B2D40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

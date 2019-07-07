@@ -1,0 +1,63 @@
+﻿<Window x:Class="ExcelToOutlook.View.Dialogs.AuthorizationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExcelToOutlook.View.Dialogs"
+        xmlns:ViewModel="clr-namespace:ExcelToOutlook.ViewModel.Dialogs"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        mc:Ignorable="d"
+        x:Name="window"
+        Title="AuthorizationDialog" Height="200" Width="400">
+    <Window.DataContext>
+        <ViewModel:AuthorizationDialogViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="9,0,9,0"/>
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0">
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                       Margin="10,5,60,0">
+                <Hyperlink Command="{Binding OpenLinkCommand}"
+                           NavigateUri="{Binding AuthorizationLink}">
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left"
+                               Text="{Binding AuthorizationLink}"/>
+                </Hyperlink>
+            </TextBlock>
+        </ScrollViewer>
+        <Button Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Margin="0,0,10,0"
+                Content="Copy" Command="{Binding CopyLinkCommand}">
+            <Button.ToolTip>
+                <TextBlock Text="Copy authorization link to clipboard"/>
+            </Button.ToolTip>
+        </Button>
+
+        <Label Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="138,5,102.732,0"
+               Content="Authorization Code:"/>
+        <TextBox Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" TextWrapping="NoWrap" VerticalAlignment="Center" Margin="20,2,20,6"
+                 Text="{Binding AuthorizationCode}" MaxWidth="600"/>
+
+        <Button Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,10,10,0"
+                Content="Authorize" Command="{Binding AuthorizeCommand}" CommandParameter="{Binding ElementName=window}" IsDefault="True"/>
+        <Button Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0"
+                Content="Cancel" IsCancel="True"/>
+
+    </Grid>
+</Window>

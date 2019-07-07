@@ -1,0 +1,350 @@
+﻿<Window x:Class="ExcelToOutlook.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExcelToOutlook"
+        xmlns:ViewModel="clr-namespace:ExcelToOutlook.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="450">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition MaxWidth="200"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.ColumnSpan="2" Content="Open File" Command="{Binding OpenFileCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+
+        <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Data}" SelectedIndex="{Binding MatchSubject}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  AutoGenerateColumns="False" LoadingRow="DataGrid_LoadingRow" IsReadOnly="True"
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+                  CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <cmd:EventToCommand Command="{Binding EditDateCellCommand}"
+                                        CommandParameter="{Binding CurrentCell, RelativeSource={RelativeSource FindAncestor, AncestorType=DataGrid}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Entry" Binding="{Binding Subject}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <!-- Unique subject configurations -->
+                <RowDefinition Height="26"/>
+                <!-- Dropdown with unique subjects -->
+                <RowDefinition Height="26"/>
+                <!-- Subject -->
+                <RowDefinition Height="52"/>
+                <!-- Category -->
+                <RowDefinition Height="52"/>
+                <!-- Start time -->
+                <!-- End time -->
+                <!-- Is all day -->
+                <RowDefinition Height="78"/>
+                <!-- Body -->
+                <RowDefinition Height="104"/>
+
+                <!-- Calendar configuration -->
+                <RowDefinition Height="26"/>
+                <!-- Name -->
+                <RowDefinition Height="26"/>
+                <!-- Color -->
+                <RowDefinition Height="26"/>
+                
+                <!-- Button -->
+                <RowDefinition MinHeight="26"/>
+            </Grid.RowDefinitions>
+
+            <!-- Unique subject configurations -->
+            <Label Grid.Row="0" Content="Subject Configurations" HorizontalAlignment="Center"/>
+
+            <!-- Dropdown with unique subjects -->
+            <ComboBox x:Name="ComboBox" Grid.Row="1" ItemsSource="{Binding Subjects}" SelectedIndex="{Binding SelectedIndex}" Width="160" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            <!-- Subject -->
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Subject" HorizontalAlignment="Center"/>
+                <TextBox Grid.Row="1" Text="{Binding CurrentSubject.Subject}" IsReadOnly="True" Height="26" MaxWidth="100" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" AcceptsReturn="False" AcceptsTab="False" MaxLines="1"/>
+            </Grid>
+            
+            <!-- Category -->
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Category" HorizontalAlignment="Center"/>
+                <ComboBox Grid.Row="1" Width="124" SelectedIndex="{Binding CurrentSubject.Category}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="White" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="None" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Blue" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Blue" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Green" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Green" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Orange" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Orange" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Gray" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Gray" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Yellow" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Yellow" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Teal" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Teal" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Pink" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Pink" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Brown" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Brown" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Red" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Red" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Black" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Black" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            
+            <!-- Start time, End time, Is all day -->
+            <Grid Grid.Row="4" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="52"/>
+                    <ColumnDefinition Width="52"/>
+                    <ColumnDefinition Width="52"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Start" HorizontalAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="2" Content="End" HorizontalAlignment="Center"/>
+
+                <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding CurrentSubject.StartDate, Mode=OneWay}" IsReadOnly="True" AcceptsReturn="False" AcceptsTab="False" Width="52" Height="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLines="1"/>
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding CurrentSubject.EndDate, Mode=OneWay}" IsReadOnly="True" AcceptsReturn="False" AcceptsTab="False" Width="52" Height="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLines="1"/>
+
+                <Grid Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="All Day:" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding CurrentSubject.IsAllDay}"/>
+                </Grid>
+            </Grid>
+
+            <!-- Body -->
+            <Grid Grid.Row="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="26"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Body" HorizontalAlignment="Center"/>
+                <TextBox Grid.Row="1" Text="{Binding CurrentSubject.Body}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15,0"/>
+            </Grid>
+
+            <!-- Calendar configuration -->
+            <Label Grid.Row="6" Content="Calendar Configurations" HorizontalAlignment="Center"/>
+            
+            <!-- Name -->
+            <Grid Grid.Row="7" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="52"/>
+                    <ColumnDefinition MinWidth="52"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="Name:"/>
+                <TextBox Grid.Column="1" Text="{Binding CalendarName}" AcceptsReturn="False" AcceptsTab="False" Height="23" Width="124" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLines="1"/>
+            </Grid>
+
+            <!-- Color -->
+            <Grid Grid.Row="8" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="52"/>
+                    <ColumnDefinition MinWidth="52"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="Color:"/>
+                <ComboBox Grid.Column="1" Width="124" SelectedIndex="{Binding CalendarColorIndex}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="White" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Auto" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="LightBlue" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Blue" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="LightGreen" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Green" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Orange" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Orange" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="LightGray" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Gray" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="LightYellow" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Yellow" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Teal" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Teal" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="LightPink" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Pink" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Brown" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Brown" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Red" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Light Red" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Border BorderThickness="1" BorderBrush="Black" Width="18" Height="12">
+                                <Rectangle Fill="Black" Width="18" Height="12"/>
+                            </Border>
+                            <TextBlock Text="Max Color" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <!-- Button -->
+            <Button Grid.Row="9" Command="{Binding SendCommand}" Content="Send" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26" Width="75" Margin="5"/>
+            
+        </Grid>
+        
+    </Grid>
+
+</Window>

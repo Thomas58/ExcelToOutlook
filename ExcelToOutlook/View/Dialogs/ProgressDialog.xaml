@@ -1,0 +1,69 @@
+﻿<Window x:Class="ExcelToOutlook.View.Dialogs.ProgressDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExcelToOutlook.View.Dialogs"
+        xmlns:src="clr-namespace:ExcelToOutlook.ViewModel.Dialogs"
+        xmlns:ViewModel="clr-namespace:ExcelToOutlook.ViewModel.Dialogs"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:tool="clr-namespace:ExcelToOutlook.Tools"
+        mc:Ignorable="d"
+        Height="150" Width="250" MaxHeight="150" MaxWidth="250">
+
+    <Window.Resources>
+        <tool:BoolToVisibility x:Key="boolToVisibility"/>
+        <tool:InvertBoolToVisibility x:Key="iBoolToVisibility"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid Visibility="{Binding Path=HasConnected, Converter={StaticResource iBoolToVisibility}}"> <!-- Connecting -->
+
+            <Label x:Name="mylabel" Content="Connecting..." HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.RowSpan="2">
+                <Label.Triggers>
+                    <EventTrigger RoutedEvent="Label.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <StringAnimationUsingKeyFrames Storyboard.TargetName="mylabel" Storyboard.TargetProperty="Content" Duration="0:0:2" RepeatBehavior="Forever">
+                                    <StringAnimationUsingKeyFrames.KeyFrames>
+                                        <DiscreteStringKeyFrame Value="Connecting"      KeyTime="0:0:0"     />
+                                        <DiscreteStringKeyFrame Value="Connecting."     KeyTime="0:0:0.5"   />
+                                        <DiscreteStringKeyFrame Value="Connecting.."    KeyTime="0:0:1"     />
+                                        <DiscreteStringKeyFrame Value="Connecting..."   KeyTime="0:0:1.5"   />
+                                    </StringAnimationUsingKeyFrames.KeyFrames>
+                                </StringAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Label.Triggers>
+            </Label>
+            
+        </Grid>
+
+        <Grid Visibility="{Binding Path=HasConnected, Converter={StaticResource boolToVisibility}}"> <!-- Creating Entries -->
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Creating Events" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+
+                <Label Content="{Binding Path=CurrentEvent.Subject}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
+                <Label Content="{Binding Path=CurrentEvent.Start}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2"/>
+                <Label Content="{Binding Path=CurrentEvent.End}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2"/>
+
+            </Grid>
+        </Grid>
+
+        <Button Grid.Row="1" Content="Cancel" IsCancel="True" Height="24" Width="88"/>
+    </Grid>
+
+</Window>
